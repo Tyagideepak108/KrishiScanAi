@@ -1,0 +1,30 @@
+# FastAPI core
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9       # file upload ke liye zaruri
+
+# Database
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.9        # PostgreSQL driver
+alembic==1.13.1               # DB migrations
+
+# Auth
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# ML - tera existing code ke saath match karta hai
+tensorflow==2.15.0
+Pillow==10.3.0
+numpy==1.26.4
+
+# Config
+pydantic-settings==2.2.1
+
+# Payments
+razorpay==1.4.1
+
+# Image storage (optional - local se start karo)
+cloudinary==1.40.0
+
+# Utils
+python-dotenv==1.0.1
