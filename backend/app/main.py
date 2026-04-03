@@ -51,3 +51,11 @@ def health():
         "status": "ok",
         "models_loaded": model_loader.models_ready()
     }
+
+@app.post("/setup-db")
+def setup_database():
+    """One-time database setup - creates all tables"""
+    from app.core.database import engine, Base
+    from app.models.db_models import User, ScanReport
+    Base.metadata.create_all(bind=engine)
+    return {"message": "Database tables created successfully"}
