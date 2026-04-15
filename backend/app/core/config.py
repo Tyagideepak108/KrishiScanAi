@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Union
+import os
 
 class Settings(BaseSettings):
     # App
@@ -15,11 +16,19 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
 
     # CORS - React frontend URLs
-    ALLOWED_ORIGINS: List[str] = [
+    ALLOWED_ORIGINS: Union[List[str], str] = [
         "http://localhost:5173",   # Vite dev server
         "http://localhost:3000",
         "https://krishiscan.vercel.app"  # Production frontend
     ]
+
+    @property
+    def get_allowed_origins(self) -> List[str]:
+        """Convert ALLOWED_ORIGINS to list if it's a string"""
+        if isinstance(self.ALLOWED_ORIGINS, str):
+            # Split by comma if string (from env variable)
+            return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",")]
+        return self.ALLOWED_ORIGINS
 
     # ML Model Paths
     SUGARCANE_MODEL_PATH: str = "models_ml/sugarcane_phase2_best.h5"
