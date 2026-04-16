@@ -2,6 +2,12 @@
 
 Full-stack production application with FastAPI backend + React frontend.
 
+## 🌐 Live Application
+
+**🚀 Live Demo:** [https://krishi-scan-ai.vercel.app/](https://krishi-scan-ai.vercel.app/)
+
+**📚 API Documentation:** [https://krishiscanai-production.up.railway.app/docs](https://krishiscanai-production.up.railway.app/docs)
+
 ---
 
 ## 📁 Project Structure
@@ -228,13 +234,13 @@ curl -X POST "http://localhost:8000/api/predict/guest?crop_type=sugarcane&lang=h
 SECRET_KEY=your-production-secret-key
 SUGARCANE_MODEL_PATH=models_ml/sugarcane_phase2_best.h5
 OTHER_CROPS_MODEL_PATH=models_ml/other_crops_model_best.h5
-ALLOWED_ORIGINS=https://your-frontend-url.vercel.app
+ALLOWED_ORIGINS=https://krishi-scan-ai.vercel.app
 ```
 
 #### Step 5 — Deploy!
 Railway automatically detect karega aur deploy kar dega.
 
-**Backend URL:** `https://your-app.up.railway.app`
+**Backend URL:** `https://krishiscanai-production.up.railway.app`
 
 ---
 
@@ -252,21 +258,21 @@ Railway automatically detect karega aur deploy kar dega.
 
 #### Step 3 — Environment Variables
 ```env
-VITE_API_URL=https://your-backend.up.railway.app
+VITE_API_URL=https://krishiscanai-production.up.railway.app
 ```
 
 #### Step 4 — Deploy!
 Vercel automatically build aur deploy kar dega.
 
-**Frontend URL:** `https://your-app.vercel.app`
+**Frontend URL:** `https://krishi-scan-ai.vercel.app`
 
 ---
 
 ### Post-Deployment Checklist
 
-✅ Backend health check: `https://your-backend.up.railway.app/health`  
-✅ API docs: `https://your-backend.up.railway.app/docs`  
-✅ Frontend load ho raha hai  
+✅ Backend health check: `https://krishiscanai-production.up.railway.app/health`  
+✅ API docs: `https://krishiscanai-production.up.railway.app/docs`  
+✅ Frontend load ho raha hai: `https://krishi-scan-ai.vercel.app`  
 ✅ Login/Register kaam kar raha hai  
 ✅ Image upload aur scan kaam kar raha hai  
 ✅ CORS properly configured hai
@@ -339,6 +345,7 @@ ls models_ml/
 - React Router
 - Axios
 - i18next (Internationalization)
+- Lucide React (Icons)
 
 **Deployment:**
 - Backend: Railway
@@ -350,8 +357,9 @@ ls models_ml/
 ## 📞 Support
 
 Koi issue hai? Contact karo:
-- Email: support@krishiscan.com
-- GitHub Issues: [Create Issue](https://github.com/yourusername/krishiscan/issues)
+- Email: tyagideepak1007@gmail.com
+- LinkedIn: [Deepak Tyagi](https://www.linkedin.com/in/tyagi-deepak/)
+- GitHub: [Tyagideepak108](https://github.com/Tyagideepak108)
 
 ---
 
