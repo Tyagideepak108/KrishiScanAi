@@ -108,20 +108,20 @@ export default function Pricing() {
       <div className="container mx-auto px-4">
 
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-up">
-          <div className="inline-block bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider mb-4">
+        <div className="text-center mb-8 sm:mb-12 animate-fade-up px-4">
+          <div className="inline-block bg-green-100 text-green-700 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider mb-3 sm:mb-4">
             Pricing
           </div>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-gray-900 mb-3 sm:mb-4">
             Simple, Transparent Pricing
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Choose the plan that fits your farming needs. No hidden charges. Cancel anytime.
           </p>
         </div>
 
         {/* Billing Toggle */}
-        <div className="flex items-center justify-center gap-4 mb-12 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 animate-fade-up px-4" style={{ animationDelay: '0.1s' }}>
           <span className={`text-sm font-semibold ${billingCycle === 'monthly' ? 'text-gray-900' : 'text-gray-500'}`}>
             Monthly
           </span>
@@ -144,13 +144,13 @@ export default function Pricing() {
         </div>
 
         {/* Plans */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto mb-12 sm:mb-20 px-4">
           {PLANS.map((plan, i) => (
             <div
               key={plan.name}
-              className={`relative flex flex-col bg-white rounded-2xl border-2 p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up ${
+              className={`relative flex flex-col bg-white rounded-2xl border-2 p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-up ${
                 plan.highlight
-                  ? 'border-green-500 shadow-xl scale-105'
+                  ? 'border-green-500 shadow-xl md:scale-105'
                   : 'border-gray-200 shadow-lg'
               }`}
               style={{ animationDelay: `${i * 0.1}s` }}
@@ -161,16 +161,16 @@ export default function Pricing() {
                 </div>
               )}
 
-              <div className="mb-6">
-                <h3 className="text-gray-600 text-sm font-semibold uppercase tracking-wider mb-3">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-gray-600 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-3">
                   {plan.name}
                 </h3>
                 <div className="flex items-end gap-2 mb-2">
-                  <span className="font-display text-5xl font-bold text-gray-900">
+                  <span className="font-display text-4xl sm:text-5xl font-bold text-gray-900">
                     {getPrice(plan)}
                   </span>
                   {typeof plan.price[billingCycle] === 'number' && plan.price[billingCycle] > 0 && (
-                    <span className="text-gray-500 text-sm mb-2">
+                    <span className="text-gray-500 text-xs sm:text-sm mb-1 sm:mb-2">
                       /{billingCycle === 'monthly' ? 'month' : 'month'}
                     </span>
                   )}
@@ -185,10 +185,10 @@ export default function Pricing() {
                 )}
               </div>
 
-              <ul className="space-y-4 mb-8 flex-1">
+              <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-1">
                 {plan.features.map((feature, j) => (
-                  <li key={j} className="flex items-start gap-3 text-sm text-gray-700">
-                    <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <li key={j} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-gray-700">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>{feature}</span>
@@ -198,7 +198,7 @@ export default function Pricing() {
 
               <Link
                 to={plan.link}
-                className={`w-full py-3 px-6 rounded-lg font-bold text-center transition-all duration-300 ${
+                className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-bold text-center transition-all duration-300 text-sm sm:text-base ${
                   plan.highlight
                     ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg hover:shadow-xl'
                     : 'bg-white text-green-600 border-2 border-green-600 hover:bg-green-50'
@@ -211,32 +211,32 @@ export default function Pricing() {
         </div>
 
         {/* Compare Banner */}
-        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-10 text-center text-white mb-20 shadow-xl animate-fade-up">
-          <p className="text-green-100 text-sm mb-2">Not sure which plan?</p>
-          <h2 className="font-display text-3xl font-bold mb-4">Start free. Upgrade when ready.</h2>
-          <p className="text-green-100 mb-6 max-w-xl mx-auto">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-6 sm:p-10 text-center text-white mb-12 sm:mb-20 shadow-xl animate-fade-up mx-4">
+          <p className="text-green-100 text-xs sm:text-sm mb-2">Not sure which plan?</p>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Start free. Upgrade when ready.</h2>
+          <p className="text-green-100 mb-4 sm:mb-6 max-w-xl mx-auto text-sm sm:text-base">
             Try our free plan with 10 scans per month. No credit card required.
           </p>
           <Link
             to="/scan"
-            className="inline-flex items-center gap-2 bg-white text-green-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 bg-white text-green-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-bold hover:bg-gray-100 transition shadow-lg hover:shadow-xl text-sm sm:text-base"
           >
             Try Free Scan
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </Link>
         </div>
 
         {/* FAQ */}
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-gray-900 mb-4">
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-gray-600">Everything you need to know about our pricing</p>
+            <p className="text-gray-600 text-sm sm:text-base">Everything you need to know about our pricing</p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {FAQS.map((faq, i) => (
               <div
                 key={i}
@@ -245,11 +245,11 @@ export default function Pricing() {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full px-6 py-5 text-left flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors"
+                  className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-3 sm:gap-4 hover:bg-gray-50 transition-colors"
                 >
-                  <h3 className="font-semibold text-gray-900 text-base">{faq.q}</h3>
+                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{faq.q}</h3>
                   <svg
-                    className={`w-5 h-5 text-green-600 flex-shrink-0 transition-transform ${
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 transition-transform ${
                       openFaq === i ? 'rotate-180' : ''
                     }`}
                     fill="none"
@@ -264,7 +264,7 @@ export default function Pricing() {
                     openFaq === i ? 'max-h-96' : 'max-h-0'
                   }`}
                 >
-                  <p className="px-6 pb-5 text-gray-600 leading-relaxed">{faq.a}</p>
+                  <p className="px-4 sm:px-6 pb-4 sm:pb-5 text-gray-600 leading-relaxed text-sm sm:text-base">{faq.a}</p>
                 </div>
               </div>
             ))}
@@ -272,14 +272,14 @@ export default function Pricing() {
         </div>
 
         {/* Contact CTA */}
-        <div className="text-center mt-16 animate-fade-up">
-          <p className="text-gray-600 mb-4">Still have questions?</p>
+        <div className="text-center mt-12 sm:mt-16 animate-fade-up px-4">
+          <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Still have questions?</p>
           <a
             href="mailto:support@krishiscan.com"
-            className="inline-flex items-center gap-2 text-green-600 font-semibold hover:text-green-700 transition"
+            className="inline-flex items-center gap-2 text-green-600 font-semibold hover:text-green-700 transition text-sm sm:text-base"
           >
             Contact our support team
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>

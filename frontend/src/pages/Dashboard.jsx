@@ -104,111 +104,111 @@ function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 animate-fade-in">
+        <div className="flex flex-col gap-4 mb-8 animate-fade-in">
           <div>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-2 flex items-center gap-3">
-              <Hand className="w-10 h-10 text-green-600" />
-              Welcome, {user?.name}!
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-gray-900 mb-2 flex items-center gap-2 sm:gap-3">
+              <Hand className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 flex-shrink-0" />
+              <span className="break-words">Welcome, {user?.name}!</span>
             </h1>
-            <p className="text-lg text-gray-600">Manage your scans and track crop health</p>
+            <p className="text-base sm:text-lg text-gray-600">Manage your scans and track crop health</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Link
               to="/scan"
-              className="btn-primary px-6 py-3 flex items-center gap-2"
+              className="btn-primary px-4 sm:px-6 py-3 flex items-center justify-center gap-2 text-sm sm:text-base"
             >
-              <Camera className="w-5 h-5" />
-              New Scan
+              <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>New Scan</span>
             </Link>
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition font-semibold shadow-lg flex items-center gap-2"
+              className="bg-red-500 text-white px-4 sm:px-6 py-3 rounded-lg hover:bg-red-600 transition font-semibold shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
-              Logout
+              <span>Logout</span>
             </button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <div className="card bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 hover:scale-105 transition-transform duration-300 animate-fade-up">
-            <div className="flex items-center justify-between mb-4">
-              <BarChart3 className="w-10 h-10 text-green-600" />
-              <div className="text-3xl font-display font-bold text-green-600">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
+              <div className="text-2xl sm:text-3xl font-display font-bold text-green-600">
                 {stats.totalScans}
               </div>
             </div>
-            <div className="text-sm font-semibold text-gray-700">Total Scans</div>
+            <div className="text-xs sm:text-sm font-semibold text-gray-700">Total Scans</div>
             <div className="text-xs text-gray-500 mt-1">All time</div>
           </div>
 
           <div className="card bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 hover:scale-105 transition-transform duration-300 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            <div className="flex items-center justify-between mb-4">
-              <Gem className="w-10 h-10 text-blue-600" />
-              <div className="text-3xl font-display font-bold text-blue-600">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <Gem className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
+              <div className="text-2xl sm:text-3xl font-display font-bold text-blue-600">
                 {user?.plan?.toUpperCase()}
               </div>
             </div>
-            <div className="text-sm font-semibold text-gray-700">Current Plan</div>
+            <div className="text-xs sm:text-sm font-semibold text-gray-700">Current Plan</div>
             <Link to="/pricing" className="text-xs text-blue-600 hover:text-blue-700 mt-1 inline-block">
               Upgrade →
             </Link>
           </div>
 
           <div className="card bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-200 hover:scale-105 transition-transform duration-300 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center justify-between mb-4">
-              <Target className="w-10 h-10 text-purple-600" />
-              <div className="text-3xl font-display font-bold text-purple-600">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <Target className="w-8 h-8 sm:w-10 sm:h-10 text-purple-600" />
+              <div className="text-2xl sm:text-3xl font-display font-bold text-purple-600">
                 {stats.avgConfidence}%
               </div>
             </div>
-            <div className="text-sm font-semibold text-gray-700">Avg Confidence</div>
+            <div className="text-xs sm:text-sm font-semibold text-gray-700">Avg Confidence</div>
             <div className="text-xs text-gray-500 mt-1">{stats.confidentScans} confident scans</div>
           </div>
 
           <div className="card bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200 hover:scale-105 transition-transform duration-300 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-            <div className="flex items-center justify-between mb-4">
-              <Bug className="w-10 h-10 text-amber-600" />
-              <div className="text-3xl font-display font-bold text-amber-600">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <Bug className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600" />
+              <div className="text-2xl sm:text-3xl font-display font-bold text-amber-600">
                 {stats.uniqueDiseases}
               </div>
             </div>
-            <div className="text-sm font-semibold text-gray-700">Diseases Found</div>
+            <div className="text-xs sm:text-sm font-semibold text-gray-700">Diseases Found</div>
             <div className="text-xs text-gray-500 mt-1">Unique types</div>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <Link to="/scan" className="card hover:scale-105 transition-all duration-300 bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
-            <div className="flex items-center gap-4">
-              <Camera className="w-12 h-12" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <Camera className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0" />
               <div>
-                <div className="text-xl font-bold mb-1">New Scan</div>
-                <div className="text-sm opacity-90">Upload leaf photo</div>
+                <div className="text-lg sm:text-xl font-bold mb-1">New Scan</div>
+                <div className="text-xs sm:text-sm opacity-90">Upload leaf photo</div>
               </div>
             </div>
           </Link>
 
           <Link to="/pricing" className="card hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
-            <div className="flex items-center gap-4">
-              <Gem className="w-12 h-12" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <Gem className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0" />
               <div>
-                <div className="text-xl font-bold mb-1">Upgrade Plan</div>
-                <div className="text-sm opacity-90">Unlock unlimited scans</div>
+                <div className="text-lg sm:text-xl font-bold mb-1">Upgrade Plan</div>
+                <div className="text-xs sm:text-sm opacity-90">Unlock unlimited scans</div>
               </div>
             </div>
           </Link>
 
           <div className="card hover:scale-105 transition-all duration-300 bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 cursor-pointer">
-            <div className="flex items-center gap-4">
-              <TrendingUp className="w-12 h-12" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <TrendingUp className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0" />
               <div>
-                <div className="text-xl font-bold mb-1">View Analytics</div>
-                <div className="text-sm opacity-90">Coming soon</div>
+                <div className="text-lg sm:text-xl font-bold mb-1">View Analytics</div>
+                <div className="text-xs sm:text-sm opacity-90">Coming soon</div>
               </div>
             </div>
           </div>
@@ -216,9 +216,9 @@ function Dashboard() {
 
         {/* Scan History */}
         <div className="card animate-fade-up" style={{ animationDelay: '0.5s' }}>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-display font-bold text-gray-900 flex items-center gap-2">
-              <FileText className="w-7 h-7 text-green-600" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6">
+            <h2 className="text-xl sm:text-2xl font-display font-bold text-gray-900 flex items-center gap-2">
+              <FileText className="w-6 h-6 sm:w-7 sm:h-7 text-green-600" />
               <span>Scan History</span>
             </h2>
             {reports.length > 0 && (
@@ -248,53 +248,53 @@ function Dashboard() {
                   className="border-2 border-gray-200 rounded-xl p-4 hover:border-green-500 hover:shadow-lg transition-all duration-300 animate-fade-in"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-start gap-4 flex-1">
-                      <div>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-start gap-3 sm:gap-4 flex-1">
+                      <div className="flex-shrink-0">
                         {report.is_confident ? (
-                          <CheckCircle className="w-10 h-10 text-green-600" />
+                          <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
                         ) : (
-                          <AlertTriangle className="w-10 h-10 text-yellow-600" />
+                          <AlertTriangle className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-600" />
                         )}
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-bold text-gray-900">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                          <h3 className="text-base sm:text-lg font-bold text-gray-900 break-words">
                             {report.disease_name}
                           </h3>
-                          <span className={`px-3 py-1 rounded-full text-xs font-bold ${getConfidenceColor(report.confidence)}`}>
+                          <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-bold ${getConfidenceColor(report.confidence)} inline-block w-fit`}>
                             {report.confidence.toFixed(1)}%
                           </span>
                         </div>
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
                           <span className="flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                             </svg>
-                            <span className="capitalize">{report.crop_type.replace('_', ' ')}</span>
+                            <span className="capitalize break-words">{report.crop_type.replace('_', ' ')}</span>
                           </span>
                           <span className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{new Date(report.created_at).toLocaleDateString('en-IN', { 
+                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                            <span className="whitespace-nowrap">{new Date(report.created_at).toLocaleDateString('en-IN', { 
                               day: 'numeric', 
                               month: 'short', 
                               year: 'numeric' 
                             })}</span>
                           </span>
                           <span className="flex items-center gap-1">
-                            <Globe className="w-4 h-4" />
+                            <Globe className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                             <span>{report.language === 'hi' ? 'Hindi' : 'English'}</span>
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-end sm:justify-start">
                       <button
                         onClick={() => handleDeleteReport(report.id)}
-                        className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition font-semibold text-sm flex items-center gap-2"
+                        className="px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition font-semibold text-xs sm:text-sm flex items-center gap-2"
                       >
-                        <Trash2 className="w-4 h-4" />
-                        Delete
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span>Delete</span>
                       </button>
                     </div>
                   </div>
