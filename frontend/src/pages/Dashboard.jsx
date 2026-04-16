@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { BarChart3, Gem, Target, Bug, Camera, TrendingUp, FileText, CheckCircle, AlertTriangle, Calendar, Globe, Trash2, Hand } from 'lucide-react'
 
 function Dashboard() {
   const [user, setUser] = useState(null)
@@ -105,23 +106,28 @@ function Dashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 animate-fade-in">
           <div>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-2">
-              👋 Welcome, {user?.name}!
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-2 flex items-center gap-3">
+              <Hand className="w-10 h-10 text-green-600" />
+              Welcome, {user?.name}!
             </h1>
             <p className="text-lg text-gray-600">Manage your scans and track crop health</p>
           </div>
           <div className="flex gap-3">
             <Link
               to="/scan"
-              className="btn-primary px-6 py-3"
+              className="btn-primary px-6 py-3 flex items-center gap-2"
             >
-              📸 New Scan
+              <Camera className="w-5 h-5" />
+              New Scan
             </Link>
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition font-semibold shadow-lg"
+              className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition font-semibold shadow-lg flex items-center gap-2"
             >
-              🚪 Logout
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
             </button>
           </div>
         </div>
@@ -130,7 +136,7 @@ function Dashboard() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="card bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 hover:scale-105 transition-transform duration-300 animate-fade-up">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-4xl">📊</div>
+              <BarChart3 className="w-10 h-10 text-green-600" />
               <div className="text-3xl font-display font-bold text-green-600">
                 {stats.totalScans}
               </div>
@@ -141,7 +147,7 @@ function Dashboard() {
 
           <div className="card bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 hover:scale-105 transition-transform duration-300 animate-fade-up" style={{ animationDelay: '0.1s' }}>
             <div className="flex items-center justify-between mb-4">
-              <div className="text-4xl">💎</div>
+              <Gem className="w-10 h-10 text-blue-600" />
               <div className="text-3xl font-display font-bold text-blue-600">
                 {user?.plan?.toUpperCase()}
               </div>
@@ -154,7 +160,7 @@ function Dashboard() {
 
           <div className="card bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-200 hover:scale-105 transition-transform duration-300 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             <div className="flex items-center justify-between mb-4">
-              <div className="text-4xl">🎯</div>
+              <Target className="w-10 h-10 text-purple-600" />
               <div className="text-3xl font-display font-bold text-purple-600">
                 {stats.avgConfidence}%
               </div>
@@ -165,7 +171,7 @@ function Dashboard() {
 
           <div className="card bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200 hover:scale-105 transition-transform duration-300 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             <div className="flex items-center justify-between mb-4">
-              <div className="text-4xl">🦠</div>
+              <Bug className="w-10 h-10 text-amber-600" />
               <div className="text-3xl font-display font-bold text-amber-600">
                 {stats.uniqueDiseases}
               </div>
@@ -179,7 +185,7 @@ function Dashboard() {
         <div className="grid md:grid-cols-3 gap-6 mb-8 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <Link to="/scan" className="card hover:scale-105 transition-all duration-300 bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
             <div className="flex items-center gap-4">
-              <div className="text-5xl">📸</div>
+              <Camera className="w-12 h-12" />
               <div>
                 <div className="text-xl font-bold mb-1">New Scan</div>
                 <div className="text-sm opacity-90">Upload leaf photo</div>
@@ -189,7 +195,7 @@ function Dashboard() {
 
           <Link to="/pricing" className="card hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
             <div className="flex items-center gap-4">
-              <div className="text-5xl">💎</div>
+              <Gem className="w-12 h-12" />
               <div>
                 <div className="text-xl font-bold mb-1">Upgrade Plan</div>
                 <div className="text-sm opacity-90">Unlock unlimited scans</div>
@@ -199,7 +205,7 @@ function Dashboard() {
 
           <div className="card hover:scale-105 transition-all duration-300 bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 cursor-pointer">
             <div className="flex items-center gap-4">
-              <div className="text-5xl">📈</div>
+              <TrendingUp className="w-12 h-12" />
               <div>
                 <div className="text-xl font-bold mb-1">View Analytics</div>
                 <div className="text-sm opacity-90">Coming soon</div>
@@ -212,7 +218,7 @@ function Dashboard() {
         <div className="card animate-fade-up" style={{ animationDelay: '0.5s' }}>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-display font-bold text-gray-900 flex items-center gap-2">
-              <span>📋</span>
+              <FileText className="w-7 h-7 text-green-600" />
               <span>Scan History</span>
             </h2>
             {reports.length > 0 && (
@@ -224,11 +230,14 @@ function Dashboard() {
           
           {reports.length === 0 ? (
             <div className="text-center py-16">
-              <div className="text-7xl mb-4">🌾</div>
+              <svg className="w-20 h-20 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
               <h3 className="text-xl font-bold text-gray-900 mb-2">No scans yet</h3>
               <p className="text-gray-600 mb-6">Start your first scan to track crop health!</p>
-              <Link to="/scan" className="btn-primary inline-block">
-                📸 Start Scanning
+              <Link to="/scan" className="btn-primary inline-flex items-center gap-2">
+                <Camera className="w-5 h-5" />
+                Start Scanning
               </Link>
             </div>
           ) : (
@@ -241,8 +250,12 @@ function Dashboard() {
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-start gap-4 flex-1">
-                      <div className="text-4xl">
-                        {report.is_confident ? '✅' : '⚠️'}
+                      <div>
+                        {report.is_confident ? (
+                          <CheckCircle className="w-10 h-10 text-green-600" />
+                        ) : (
+                          <AlertTriangle className="w-10 h-10 text-yellow-600" />
+                        )}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
@@ -255,11 +268,13 @@ function Dashboard() {
                         </div>
                         <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
                           <span className="flex items-center gap-1">
-                            <span>🌾</span>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                            </svg>
                             <span className="capitalize">{report.crop_type.replace('_', ' ')}</span>
                           </span>
                           <span className="flex items-center gap-1">
-                            <span>📅</span>
+                            <Calendar className="w-4 h-4" />
                             <span>{new Date(report.created_at).toLocaleDateString('en-IN', { 
                               day: 'numeric', 
                               month: 'short', 
@@ -267,7 +282,7 @@ function Dashboard() {
                             })}</span>
                           </span>
                           <span className="flex items-center gap-1">
-                            <span>{report.language === 'hi' ? '🇮🇳' : '🇬🇧'}</span>
+                            <Globe className="w-4 h-4" />
                             <span>{report.language === 'hi' ? 'Hindi' : 'English'}</span>
                           </span>
                         </div>
@@ -278,9 +293,7 @@ function Dashboard() {
                         onClick={() => handleDeleteReport(report.id)}
                         className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition font-semibold text-sm flex items-center gap-2"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                        <Trash2 className="w-4 h-4" />
                         Delete
                       </button>
                     </div>
