@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -11,6 +11,10 @@ function Scanner() {
   const [guestScans, setGuestScans] = useState(0)
   const [authScans, setAuthScans] = useState(0)
   const [dragActive, setDragActive] = useState(false)
+  const [captureMode, setCaptureMode] = useState('upload') // 'upload' or 'camera'
+  const [stream, setStream] = useState(null)
+  const videoRef = useRef(null)
+  const canvasRef = useRef(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -23,6 +27,67 @@ function Scanner() {
       setGuestScans(scans)
     }
   }, [])
+
+  // Cleanup camera stream on unmount
+  useEffect(() => {
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop())
+      }
+    }
+  }, [stream])
+
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } // Use back camera on mobile
+      })
+      setStream(mediaStream)
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream
+      }
+    } catch (error) {
+      alert('Camera access denied. Please allow camera permissions.')
+      setCaptureMode('upload')
+    }
+  }
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop())
+      setStream(null)
+    }
+  }
+
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current
+      const canvas = canvasRef.current
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(video, 0, 0)
+      
+      canvas.toBlob((blob) => {
+        const file = new File([blob], 'camera-capture.jpg', { type: 'image/jpeg' })
+        setImage(file)
+        setPreview(URL.createObjectURL(blob))
+        stopCamera()
+      }, 'image/jpeg', 0.95)
+    }
+  }
+
+  const handleModeChange = (mode) => {
+    setCaptureMode(mode)
+    setImage(null)
+    setPreview(null)
+    
+    if (mode === 'camera') {
+      startCamera()
+    } else {
+      stopCamera()
+    }
+  }
 
   const handleDrag = (e) => {
     e.preventDefault()
@@ -287,15 +352,51 @@ function Scanner() {
             </div>
           </div>
 
-          {/* Right Column - Image Upload */}
+          {/* Right Column - Image Upload/Camera */}
           <div className="space-y-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
             <div className="card">
-              <label className="label flex items-center gap-2 mb-4">
-                <span className="text-xl">📷</span>
-                <span>Upload Image</span>
-              </label>
+              {/* Mode Toggle */}
+              <div className="flex items-center justify-between mb-4">
+                <label className="label flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>Capture Method</span>
+                </label>
+                <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
+                  <button
+                    onClick={() => handleModeChange('upload')}
+                    className={`px-4 py-2 rounded-md text-sm font-semibold transition-all ${
+                      captureMode === 'upload'
+                        ? 'bg-white text-green-600 shadow-md'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <svg className="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Upload
+                  </button>
+                  <button
+                    onClick={() => handleModeChange('camera')}
+                    className={`px-4 py-2 rounded-md text-sm font-semibold transition-all ${
+                      captureMode === 'camera'
+                        ? 'bg-white text-green-600 shadow-md'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <svg className="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Camera
+                  </button>
+                </div>
+              </div>
               
-              {!preview ? (
+              {/* Upload Mode */}
+              {captureMode === 'upload' && !preview && (
                 <div
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
@@ -314,7 +415,9 @@ function Scanner() {
                     onChange={handleImageChange}
                   />
                   <div className="text-center p-6">
-                    <div className="text-7xl mb-4 animate-pulse">📷</div>
+                    <svg className="w-20 h-20 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
                     <p className="text-xl font-bold text-gray-700 mb-2">
                       {dragActive ? 'Drop image here' : 'Click or drag to upload'}
                     </p>
@@ -323,13 +426,60 @@ function Scanner() {
                     </p>
                     <div className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                       </svg>
                       Choose File
                     </div>
                   </div>
                 </div>
-              ) : (
+              )}
+
+              {/* Camera Mode */}
+              {captureMode === 'camera' && !preview && (
+                <div className="relative w-full h-96 bg-black rounded-2xl overflow-hidden">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                  <canvas ref={canvasRef} className="hidden" />
+                  
+                  {/* Camera Controls */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                    <div className="flex items-center justify-center gap-4">
+                      <button
+                        onClick={() => handleModeChange('upload')}
+                        className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-semibold transition backdrop-blur-sm"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={capturePhoto}
+                        className="bg-white hover:bg-gray-100 text-gray-900 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 flex items-center gap-2"
+                      >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Capture Photo
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Camera Grid Overlay */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div className="w-full h-full grid grid-cols-3 grid-rows-3">
+                      {[...Array(9)].map((_, i) => (
+                        <div key={i} className="border border-white/20"></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Preview */}
+              {preview && (
                 <div className="relative group">
                   <img
                     src={preview}
@@ -341,13 +491,16 @@ function Scanner() {
                       onClick={() => {
                         setImage(null)
                         setPreview(null)
+                        if (captureMode === 'camera') {
+                          startCamera()
+                        }
                       }}
                       className="opacity-0 group-hover:opacity-100 transition-opacity bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 font-semibold flex items-center gap-2"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
-                      Remove Image
+                      {captureMode === 'camera' ? 'Retake Photo' : 'Remove Image'}
                     </button>
                   </div>
                 </div>
