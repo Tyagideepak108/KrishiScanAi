@@ -36,24 +36,35 @@ function Login() {
 
       const response = await axios.post(`${apiUrl}${endpoint}`, payload)
       
+      // Validate response
+      if (!response.data || !response.data.access_token) {
+        throw new Error('Invalid response from server')
+      }
+      
       // Save token and user info
-      localStorage.setItem('token', response.data.access_token)
-      localStorage.setItem('user', JSON.stringify({
-        id: response.data.user_id,
-        name: response.data.name,
-        email: response.data.email,
-        plan: response.data.plan
-      }))
+      const token = response.data.access_token
+      const userData = {
+        id: response.data.user_id || response.data.id || '',
+        name: response.data.name || 'User',
+        email: response.data.email || formData.email,
+        plan: response.data.plan || 'free'
+      }
+      
+      localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(userData))
 
-      // Reset auth scans counter for new login
+      // Reset auth scans counter for new registration
       if (!isLogin) {
         localStorage.setItem('authScans', '0')
       }
 
-      // Reload to update navbar state
-      window.location.href = '/dashboard'
+      // Use navigate instead of window.location.href for smooth transition
+      setTimeout(() => {
+        navigate('/dashboard', { replace: true })
+      }, 300)
     } catch (err) {
-      setError(err.response?.data?.detail || 'Authentication failed. Please try again.')
+      console.error('Auth error:', err)
+      setError(err.response?.data?.detail || err.message || 'Authentication failed. Please try again.')
     } finally {
       setLoading(false)
     }

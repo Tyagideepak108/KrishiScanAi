@@ -24,8 +24,15 @@ function Dashboard() {
       return
     }
 
-    setUser(JSON.parse(userData))
-    fetchReports(token)
+    try {
+      setUser(JSON.parse(userData))
+      fetchReports(token)
+    } catch (error) {
+      console.error('Error parsing user data:', error)
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      navigate('/login')
+    }
   }, [navigate])
 
   const fetchReports = async (token) => {
