@@ -70,6 +70,10 @@ function Dashboard() {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.removeItem('authScans')
+    
+    // Dispatch custom event to update navbar
+    window.dispatchEvent(new Event('authChange'))
+    
     window.location.href = '/'
   }
 

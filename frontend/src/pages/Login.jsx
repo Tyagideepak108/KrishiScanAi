@@ -58,6 +58,9 @@ function Login() {
         localStorage.setItem('authScans', '0')
       }
 
+      // Dispatch custom event to update navbar
+      window.dispatchEvent(new Event('authChange'))
+
       // Use navigate instead of window.location.href for smooth transition
       setTimeout(() => {
         navigate('/dashboard', { replace: true })

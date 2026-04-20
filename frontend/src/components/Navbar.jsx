@@ -10,11 +10,36 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const userData = localStorage.getItem('user')
-    if (token && userData) {
-      setIsLoggedIn(true)
-      setUser(JSON.parse(userData))
+    const checkAuthStatus = () => {
+      const token = localStorage.getItem('token')
+      const userData = localStorage.getItem('user')
+      if (token && userData) {
+        try {
+          setIsLoggedIn(true)
+          setUser(JSON.parse(userData))
+        } catch (error) {
+          console.error('Error parsing user data:', error)
+          setIsLoggedIn(false)
+          setUser(null)
+        }
+      } else {
+        setIsLoggedIn(false)
+        setUser(null)
+      }
+    }
+
+    // Check on component mount
+    checkAuthStatus()
+
+    // Listen for storage changes (when user logs in/out in another tab)
+    window.addEventListener('storage', checkAuthStatus)
+
+    // Listen for custom auth events
+    window.addEventListener('authChange', checkAuthStatus)
+
+    return () => {
+      window.removeEventListener('storage', checkAuthStatus)
+      window.removeEventListener('authChange', checkAuthStatus)
     }
   }, [])
 
@@ -22,6 +47,15 @@ function Navbar() {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.removeItem('authScans')
+    
+    // Update state immediately
+    setIsLoggedIn(false)
+    setUser(null)
+    
+    // Dispatch custom event
+    window.dispatchEvent(new Event('authChange'))
+    
+    // Navigate to home
     window.location.href = '/'
   }
 
