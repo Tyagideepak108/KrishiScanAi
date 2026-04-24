@@ -197,7 +197,7 @@ export default function Pricing() {
               </ul>
 
               <Link
-                to={plan.link}
+                to="/coming-soon"
                 className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-bold text-center transition-all duration-300 text-sm sm:text-base ${
                   plan.highlight
                     ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg hover:shadow-xl'
