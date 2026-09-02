@@ -151,7 +151,7 @@ function Scanner() {
     formData.append('file', image)
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://krishiscanai-production.up.railway.app'
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://krishiscanai-production-5d07.up.railway.app'
       
       // Use authenticated endpoint if logged in, else guest
       const endpoint = token 
