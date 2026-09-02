@@ -27,7 +27,7 @@ function Login() {
     setLoading(true)
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://krishiscanai-production.up.railway.app'
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://krishiscanai-production-5d07.up.railway.app'
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register'
       
       const payload = isLogin 
