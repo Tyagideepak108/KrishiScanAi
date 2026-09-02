@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/app/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backend/app/main.py"
+    }
+  ],
+  "env": {
+    "SECRET_KEY": "krishiscan-super-secret-key",
+    "SUGARCANE_MODEL_PATH": "backend/models_ml/sugarcane_phase2_best.h5",
+    "OTHER_CROPS_MODEL_PATH": "backend/models_ml/other_crops_model_best.h5"
+  }
+}

@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: Union[List[str], str] = [
         "http://localhost:5173",   # Vite dev server
         "http://localhost:3000",
-        "https://krishiscan.vercel.app"  # Production frontend
+        "https://krishi-scan-ai.vercel.app"  # Production frontend
     ]
 
     @property

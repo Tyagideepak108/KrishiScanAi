@@ -1,0 +1,33 @@
+services:
+  # Backend API Service
+  - type: web
+    name: krishiscan-backend
+    runtime: python
+    region: singapore
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SECRET_KEY
+        value: krishiscan-super-secret-production-key-2024
+      - key: SUGARCANE_MODEL_PATH
+        value: models_ml/sugarcane_phase2_best.h5
+      - key: OTHER_CROPS_MODEL_PATH
+        value: models_ml/other_crops_model_best.h5
+      - key: SUGARCANE_INFO_PATH
+        value: disease_data/sugercane_info.json
+      - key: OTHER_CROPS_INFO_PATH
+        value: disease_data/other_diseases_info.json
+      - key: ALLOWED_ORIGINS
+        value: https://krishi-scan-ai.vercel.app,http://localhost:5173
+      - key: DATABASE_URL
+        fromDatabase:
+          name: krishiscan-db
+          property: connectionString
+    healthCheckPath: /health
+
+  # PostgreSQL Database
+databases:
+  - name: krishiscan-db
+    databaseName: krishiscan
+    region: singapore
